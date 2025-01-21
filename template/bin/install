@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Аргументы
+version=$1
+install_dir=$2
+
+# Определяем URL для скачивания бинарника
+os=$(uname | tr '[:upper:]' '[:lower:]')
+arch=$(uname -m)
+arch=${arch/x86_64/amd64}
+
+binary_url="https://github.com/golang-migrate/migrate/releases/download/v${version}/migrate.${os}-${arch}.tar.gz"
+
+# Скачиваем и распаковываем бинарник
+curl -L "$binary_url" | tar -xz -C "$install_dir" migrate
+chmod +x "${install_dir}/migrate"
