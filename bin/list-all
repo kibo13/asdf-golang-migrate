@@ -2,4 +2,7 @@
 set -euo pipefail
 
 # Получаем список версий с GitHub API
-curl -s https://api.github.com/repos/golang-migrate/migrate/releases | grep -o '"tag_name": "v[0-9]\.[0-9]\.[0-9]\+"' | sed 's/v//g' | sort -V
+curl -s https://api.github.com/repos/golang-migrate/migrate/releases | \
+  jq -r '.[].tag_name' | \
+  sed 's/^v//g' | \
+  sort -V
