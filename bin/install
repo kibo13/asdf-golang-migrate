@@ -1,23 +1,23 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Проверяем, переданы ли оба аргумента
+# Проверка на переданные аргументы
 if [ -z "${ASDF_INSTALL_VERSION+x}" ] || [ -z "${ASDF_INSTALL_PATH+x}" ]; then
   echo "Usage: $0 <version> <install_directory>"
   exit 1
 fi
 
-# Аргументы
+# Версия и путь установки
 version=$ASDF_INSTALL_VERSION
 install_dir=$ASDF_INSTALL_PATH
 
-# Определяем URL для скачивания бинарника
+# Определение URL для скачивания бинарника
 os=$(uname | tr '[:upper:]' '[:lower:]')
 arch=$(uname -m)
 arch=${arch/x86_64/amd64}
 
 binary_url="https://github.com/golang-migrate/migrate/releases/download/v${version}/migrate.${os}-${arch}.tar.gz"
 
-# Скачиваем и распаковываем бинарник
+# Скачивание и распаковка бинарника
 curl -L "$binary_url" | tar -xz -C "$install_dir" migrate
 chmod +x "${install_dir}/migrate"
