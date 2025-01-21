@@ -2,14 +2,14 @@
 set -euo pipefail
 
 # Проверяем, переданы ли оба аргумента
-if [ "$#" -ne 2 ]; then
+if [ -z "${ASDF_INSTALL_VERSION+x}" ] || [ -z "${ASDF_INSTALL_PATH+x}" ]; then
   echo "Usage: $0 <version> <install_directory>"
   exit 1
 fi
 
 # Аргументы
-version=$1
-install_dir=$2
+version=$ASDF_INSTALL_VERSION
+install_dir=$ASDF_INSTALL_PATH
 
 # Определяем URL для скачивания бинарника
 os=$(uname | tr '[:upper:]' '[:lower:]')
